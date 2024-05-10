@@ -11,4 +11,12 @@ export class InfoController {
   getConfig(@Body() bodyRequest: UpdateInfoRequest): Promise<BaseResponse> {
     return this.infoService.validateInfo(bodyRequest);
   }
+
+  @Post('/validate-form')
+  validateForm(): Promise<BaseResponse> {
+    return Promise.resolve({
+      success: true,
+      data: 'Form is valid!',
+    });
+  }
 }
