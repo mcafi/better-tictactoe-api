@@ -4,6 +4,7 @@ import { validate } from 'class-validator';
 import { UpdateInfoRequest as UpdateInfoRequestInterface } from './interfaces';
 import { BaseResponse } from '../interfaces';
 import { UpdateInfoRequest } from './models';
+import { FormValues } from './classes/FormValues';
 
 @Injectable()
 export class InfoService {
@@ -22,5 +23,10 @@ export class InfoService {
       success: true,
       data,
     };
+  }
+
+  async validateFormData(formValues: FormValues): Promise<BaseResponse> {
+    console.log(formValues);
+    throw new Error('Not implemented');
   }
 }

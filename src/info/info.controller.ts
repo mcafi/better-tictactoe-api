@@ -1,7 +1,8 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Res, HttpException } from '@nestjs/common';
 import { InfoService } from './info.service';
 import { UpdateInfoRequest } from './interfaces';
 import { BaseResponse } from '../interfaces';
+import { FormValues } from './classes/FormValues';
 
 @Controller('info')
 export class InfoController {
@@ -13,10 +14,9 @@ export class InfoController {
   }
 
   @Post('/validate-form')
-  validateForm(): Promise<BaseResponse> {
-    return Promise.resolve({
-      success: true,
-      data: 'Form is valid!',
-    });
+  validateForm(@Body() formValues: FormValues): Promise<BaseResponse> {
+    console.log(formValues);
+    this.infoService.validateFormData(formValues);
+    throw new HttpException('Not implemented', 422);
   }
 }
