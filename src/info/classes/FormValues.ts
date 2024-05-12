@@ -5,9 +5,28 @@ import {
   MaxLength,
   Min,
   MinLength,
-  Validate,
   ValidateIf,
 } from 'class-validator';
+
+import {
+  ValidatorConstraint,
+  ValidatorConstraintInterface,
+  ValidationArguments,
+  Validate,
+} from 'class-validator';
+
+@ValidatorConstraint({ name: 'isMarriedForAdults', async: false })
+export class IsMarriedForAdults implements ValidatorConstraintInterface {
+  validate(married: any, args: ValidationArguments) {
+    const age = (args.object as any).age;
+    console.log(age, married);
+    return age < 18 || married != null;
+  }
+
+  defaultMessage() {
+    return 'The married field is required for people above 18 years old';
+  }
+}
 
 export class FormValues {
   @IsNotEmpty({
@@ -28,12 +47,10 @@ export class FormValues {
   @Max(150)
   age: number;
 
-  @Validate((o) => o.age < 18 || o.married != null, {
-    message: 'The married field is required for people above 18 years old',
-  })
+  @Validate(IsMarriedForAdults)
   married: boolean;
 
-  @Validate((o) => getYearsDifference(new Date(o.dateOfBirth)) == o.age, {
+  @ValidateIf((o) => getYearsDifference(new Date(o.dateOfBirth)) == o.age, {
     message: 'The date of birth is not compatible with the age',
   })
   @IsNotEmpty({
