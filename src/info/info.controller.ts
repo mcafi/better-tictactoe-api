@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Res, HttpException } from '@nestjs/common';
+import { Controller, Post, Body, HttpException } from '@nestjs/common';
 import { InfoService } from './info.service';
 import { UpdateInfoRequest } from './interfaces';
 import { BaseResponse } from '../interfaces';

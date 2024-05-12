@@ -25,8 +25,15 @@ export class InfoService {
     };
   }
 
-  async validateFormData(formValues: FormValues): Promise<BaseResponse> {
-    console.log(formValues);
-    throw new Error('Not implemented');
+  async validateFormData(
+    formValues: Record<string, any>,
+  ): Promise<BaseResponse> {
+    const formValueClass = plainToClass(FormValues, formValues);
+    console.log(formValueClass);
+    console.log(await validate(formValueClass));
+    return {
+      success: true,
+      data: formValues,
+    };
   }
 }

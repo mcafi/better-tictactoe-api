@@ -5,6 +5,7 @@ import {
   MaxLength,
   Min,
   MinLength,
+  Validate,
   ValidateIf,
 } from 'class-validator';
 
@@ -27,19 +28,31 @@ export class FormValues {
   @Max(150)
   age: number;
 
-  @ValidateIf((o) => o.age < 18 || o.married != null, {
+  @Validate((o) => o.age < 18 || o.married != null, {
     message: 'The married field is required for people above 18 years old',
   })
   married: boolean;
 
+  @Validate((o) => getYearsDifference(new Date(o.dateOfBirth)) == o.age, {
+    message: 'The date of birth is not compatible with the age',
+  })
   @IsNotEmpty({
     message: 'The date of birth is required',
   })
-  @IsDateString('The date format is not correct')
-  @ValidateIf((o) => getYearsDifference(new Date(o.dateOfBirth)) == o.age, {
-    message: 'The date of birth is not compatible with the age',
-  })
+  @IsDateString({}, { message: 'The date format is not correct' })
   dateOfBirth: string;
+
+  constructor(
+    name: string,
+    age: number,
+    married: boolean,
+    dateOfBirth: string,
+  ) {
+    this.name = name;
+    this.age = age;
+    this.married = married;
+    this.dateOfBirth = dateOfBirth;
+  }
 }
 
 function getYearsDifference(date) {
