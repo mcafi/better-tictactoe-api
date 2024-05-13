@@ -1,4 +1,4 @@
-import { Controller, Post, Body, HttpException } from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { InfoService } from './info.service';
 import { UpdateInfoRequest } from './interfaces';
 import { BaseResponse } from '../interfaces';
@@ -16,7 +16,6 @@ export class InfoController {
   @Post('/validate-form')
   validateForm(@Body() formValues: FormValues): Promise<BaseResponse> {
     console.log(formValues);
-    this.infoService.validateFormData(formValues);
-    throw new HttpException('Not implemented', 422);
+    return this.infoService.validateFormData(formValues);
   }
 }

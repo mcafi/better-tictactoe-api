@@ -29,11 +29,18 @@ export class InfoService {
     formValues: Record<string, any>,
   ): Promise<BaseResponse> {
     const formValueClass = plainToClass(FormValues, formValues);
-    console.log(formValueClass);
-    console.log(await validate(formValueClass));
+    const validationErrors = await validate(formValueClass, {
+      stopAtFirstError: true,
+    });
+    if (validationErrors.length > 0) {
+      return {
+        success: false,
+        errors: validationErrors,
+      };
+    }
     return {
       success: true,
-      data: formValues,
+      data: validationErrors,
     };
   }
 }
