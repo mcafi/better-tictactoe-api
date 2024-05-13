@@ -15,7 +15,6 @@ export class InfoController {
 
   @Post('/validate-form')
   validateForm(@Body() formValues: FormValues): Promise<BaseResponse> {
-    console.log(formValues);
     return this.infoService.validateFormData(formValues);
   }
 }
