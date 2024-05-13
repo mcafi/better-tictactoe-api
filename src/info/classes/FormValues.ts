@@ -24,7 +24,7 @@ export class IsMarriedForAdults implements ValidatorConstraintInterface {
   }
 
   defaultMessage() {
-    return 'The married field is required for people above 18 years old';
+    return 'This value is required for people above 18 years old';
   }
 }
 
@@ -51,10 +51,10 @@ export class IsDateOfBirthValid implements ValidatorConstraintInterface {
 
 export class FormValues {
   @MinLength(10, {
-    message: 'The name is too short',
+    message: 'The name length must be between 10 and 50',
   })
   @MaxLength(50, {
-    message: 'The name is too long',
+    message: 'The name length must be between 10 and 50',
   })
   @IsNotEmpty({
     message: 'The name is required',
